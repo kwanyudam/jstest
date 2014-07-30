@@ -12,7 +12,7 @@
     <script type="text/javascript" language="javascript" src="../static/JScript.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
-		
+
 	});
 	function upload(){
 		alert('uploaded!');
@@ -20,48 +20,19 @@
 	function download(){
 		alert('downloaded!');
 	}
-	function login(){
-		alert('Logged In!');
-	}
 
 	</script>
  </head>
  <body>
- <p>&nbsp&nbsp Hello TagMe!</p>
+
 <br>
-<div id="drop_zone">&nbsp&nbsp Drop files here</div>
-<output id="list"></output>
-
-<script>
-  function handleFileSelect(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-
-    var files = evt.dataTransfer.files; // FileList object.
-
-    // files is a FileList of File objects. List some properties.
-    var output = [];
-    for (var i = 0, f; f = files[i]; i++) {
-      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-                  f.size, ' bytes, last modified: ',
-                  f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-                  '</li>');
-    }
-    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
-  }
-
-  function handleDragOver(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
-  }
-
-  // Setup the dnd listeners.
-  var dropZone = document.getElementById('drop_zone');
-  dropZone.addEventListener('dragover', handleDragOver, false);
-  dropZone.addEventListener('drop', handleFileSelect, false);
-</script>
-
+ <p>state : {{ state }} </p>
+ {% if loggedin == True  %}
+     <form id = "logout" method = "post"> {% csrf_token %}
+        <input type = "submit" value = "LOGOUT"/>
+        <input type = "hidden" value = "logout" name = "type"/>
+     </form>
+{% endif %}
 
 <br>
 
@@ -71,8 +42,14 @@
   &nbsp&nbsp<input type="submit" value="Upload" onclick="return upload();">
   &nbsp&nbsp<input type="submit" value="Download" onclick="return download();">
   </form>
-
- <br> &nbsp&nbsp<input type="button" onclick="showPopup()" value="Log In" />
+{% if  loggedin == False %}
+    <br> &nbsp&nbsp<input type="button" onclick="showPopup()" value="Log In" />
+{% endif %}
+<form id = "to_join" action = "join">
+    {% if  loggedin == False %}
+    <input type = "submit" value = "JOIN MEMBER"/>
+    {% endif %}
+</form>
 
     <!--Popup-->
     <div id="content" class="white_content">
@@ -84,17 +61,23 @@
             </tr>
             <tr>
 			<td valign="top">
-                <form id="login">
-				  &nbsp&nbsp ID&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <input type="text" name="id"><br>
-				  &nbsp&nbsp Password: <input type="text" name="password"><br><br>
-				  &nbsp&nbsp<input type="submit" value="Log In" onclick="return login();">
+                <form id="login" method = "post"> {%  csrf_token %}
+				   &nbsp&nbspID&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <input type="text" name="_id"><br>
+				   &nbsp&nbspPassword: <input type="password" name="_pw"><br><br>
+                    <input type = "hidden" name = "type" value = "login">
+				    <input type="submit" value="Log In" >
 				</form>
 			</td>
             </tr>
         </table>
     </div>
 
+<br>
+<br>
+<br>
+
     <!--Background-->
     <div id="fade" class="black_overlay" />
+
  </body>
 </html>

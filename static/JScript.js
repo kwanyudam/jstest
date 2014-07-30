@@ -2,7 +2,7 @@
     JScript.js
 */
 
-function getPageSize() {
+function getPageSize(){
     var xScroll, yScroll;
     if (window.innerHeight && window.scrollMaxY) {
         xScroll = document.body.scrollWidth;
