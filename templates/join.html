@@ -1,0 +1,31 @@
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>TestTag</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<link href="../static/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" language="javascript" src="../static/JScript.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+
+	});
+	</script>
+ </head>
+ <body>
+    {{ state }}
+    <form id ="signup" method = "post">{% csrf_token %}
+         ID : <input type="text" name="_id"><br>
+         EMAIL : <input type="text" name = "_email"><br>
+         PW : <input type="password" name = "_pw"><br>
+         PW RE :<input type="password" name = "_pwre"> <br>
+         <input type ="hidden" name = "type" value = "signup">
+         <input type = "submit" value = "가입">
+
+     </form>
+
+ </body>
+</html>
